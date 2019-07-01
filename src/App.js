@@ -69,7 +69,7 @@ const App = props => (
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <HomePage />
+        <HomePage metric={"tubingPressure"}/>
         <ToastContainer />
       </Wrapper>
     </Provider>
