@@ -7,7 +7,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
-import HomePage from "./components/HomePage";
+import Graph from "./components/Graph";
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
@@ -69,7 +69,7 @@ const App = props => (
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <HomePage metric={"tubingPressure"}/>
+        <Graph oilTemp={true} waterTemp={true} flareTemp={false} tubingPressure={false} casingPressure={false} injValveOpen={false}/>
         <ToastContainer />
       </Wrapper>
     </Provider>
