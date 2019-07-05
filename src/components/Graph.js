@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Subscription } from "react-apollo";
 import { gql } from "apollo-boost";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import * as moment from 'moment';
-import createPlotlyComponent from 'react-plotlyjs';
-import Plotly from 'plotly.js/dist/plotly-cartesian';
 
 import Spinner from "./Spinner/Spinner";
-
-const Plot = createPlotlyComponent(Plotly);
 
 const subscribe = gql`
 subscription {
@@ -55,10 +52,10 @@ const getMetric = (metric, helperArray) => {
 
       for(let i = call.length -1; i >= call.length -1500; i--) {
         target.push({
-          metric: call[i].metric,
-          at: moment(call[i].at).format('MMM DD YYYY H:mm:ss A'),
-          value: call[i].value,
-          unit: call[i].unit
+          [metric]: call[i].metric,
+          [metric + "At"]: moment(call[i].at).format('MMM DD YYYY H:mm:ss A'),
+          [metric + "Value"]: call[i].value,
+          [metric + "Unit"]: call[i].unit
         });
       }
       return helperArray(target);
@@ -79,40 +76,35 @@ const Graph = props => {
   const hasTemp = props.flareTemp || props.oilTemp || props.waterTemp;
   const hasPressure = props.tubingPressure || props.casingPressure;
 
-  const metricsArray = [];
+  let metricsArray = ["oilTemp", "waterTemp", "flareTemp", "tubingPressure", "casingPressure", "injValveOpen"];
 
-  useEffect(() => {
-    Object.keys(props).forEach(prop => {
-      metricsArray.push(prop);
-    })
-    metricsArray.forEach(metric => {
-      switch(metric) {
-        case "waterTemp":
-          return getMetric(metric, setWaterTempArray);
-        case "oilTemp":
-          return getMetric(metric, setOilTempArray);
-        case "flareTemp":
-          return getMetric(metric, setFlareTempArray);
-        case "tubingPressure":
-          return getMetric(metric, setTubingPressureArray);
-        case "casingPressure":
-          return getMetric(metric, setCasingPressureArray);
-        case "injValveOpen":
-          return getMetric(metric, setInjValveOpenArray);
-        default:
-          break;
-      }
-    })
-  }, [props, metricsArray])
+  metricsArray.forEach(metric => {
+    switch(metric) {
+      case "waterTemp":
+        return getMetric(metric, setWaterTempArray);
+      case "oilTemp":
+        return getMetric(metric, setOilTempArray);
+      case "flareTemp":
+        return getMetric(metric, setFlareTempArray);
+      case "tubingPressure":
+        return getMetric(metric, setTubingPressureArray);
+      case "casingPressure":
+        return getMetric(metric, setCasingPressureArray);
+      case "injValveOpen":
+        return getMetric(metric, setInjValveOpenArray);
+      default:
+        break;
+    }
+  })
 
   const updateMetric = (data, metric) => {
     const newValue = {
-      metric: data.metric,
-      at: moment(data.at).format('MMM DD YYYY H:mm:ss A'),
-      value: data.value,
-      unit: data.unit
+      [metric]: data.metric,
+      [metric + "At"]: moment(data.at).format('MMM DD YYYY H:mm:ss A'),
+      [metric + "Value"]: data.value,
+      [metric + "Unit"]: data.unit
     }
-    
+
     switch(metric) {
       case "waterTemp":
         if(waterTempArray) {
@@ -166,55 +158,10 @@ const Graph = props => {
         break;
     }
   }
-/*
-  const getMetric = (data, metric) => {
-    let newValue;
-    if(data.newMeasurement.metric === metric) {
-      newValue = {
-        metric: data.metric,
-        at: moment(data.at).format('MMM DD YYYY H:mm:ss A'),
-        value: data.value,
-        unit: data.unit
-      }
-    }
 
-
+  const buildPlotObject = (metric) => {
     switch(metric) {
       case "waterTemp":
-        return setWaterTempArray(newValue);
-      case "oilTemp":
-        return setOilTempArray(newValue);
-      case "flareTemp":
-        return setFlareTempArray(newValue);
-      case "tubingPressure":
-        return setTubingPressureArray(newValue);
-      case "casingPressure":
-        return setCasingPressureArray(newValue);
-      case "injValveOpen":
-        return setInjValveOpenArray(newValue);
-      default:
-        break;
-    }
-  }
-  
-*/
-  return (
-    <React.Fragment>
-      <Subscription subscription={subscribe}>
-        {({ loading,  data}) => {
-          metricsArray.forEach(metric => {
-            if(props[metric] && metric === data.newMeasurement.metric) {
-              updateMetric(data.newMeasurement, metric);
-            }
-          })
-          let oilTempAt = [];
-          oilTempArray && oilTempArray.map(item => {
-            return oilTempAt.push(item.at);
-          })
-          let oilTempValue = [];
-          oilTempArray && oilTempArray.map(item => {
-            return oilTempValue.push(item.value);
-          })
           let waterTempAt = [];
           waterTempArray && waterTempArray.map(item => {
             return waterTempAt.push(item.at);
@@ -223,50 +170,124 @@ const Graph = props => {
           waterTempArray && waterTempArray.map(item => {
             return waterTempValue.push(item.value);
           })
+          return {
+            x: waterTempAt,
+            y: waterTempValue,
+            type: 'scatter',
+            mode: 'lines+points',
+            marker: {color: 'blue'}
+          };
+      case "oilTemp":
+          let oilTempAt = [];
+          oilTempArray && oilTempArray.map(item => {
+            return oilTempAt.push(item.at);
+          })
+          let oilTempValue = [];
+          oilTempArray && oilTempArray.map(item => {
+            return oilTempValue.push(item.value);
+          })
+          return {
+            x: oilTempAt,
+            y: oilTempValue,
+            type: 'scatter',
+            mode: 'lines+points',
+            marker: {color: 'red'}
+          };
+      case "flareTemp":
+        break;
+      case "tubingPressure":
+         break;
+      case "casingPressure":
+         break;
+      case "injValveOpen":
+        break;
+      default:
+        break;
+    }
+  }
+
+  const buildMetricArray = () => {
+    const metricArray = [];
+
+    console.log(metricsArray);
+  }
+
+  return (
+    <React.Fragment>
+      <Subscription subscription={subscribe}>
+        {({ loading,  data}) => {
+          if(!loading) {
+            metricsArray.forEach(metric => {
+              if(props[metric] && metric === data.newMeasurement.metric) {
+                updateMetric(data.newMeasurement, metric);
+              }
+            })
+          }
+
+          let fullArray = [];
+
+          if(waterTempArray && oilTempArray) {
+            for(let i = 0; i < 1500; i++) {
+              fullArray.push({
+                waterTempValue: waterTempArray[i].waterTempValue,
+                waterTempAt: waterTempArray[i].waterTempAt,
+                oilTempValue: oilTempArray[i].oilTempValue,
+                oilTempAt: oilTempArray[i].oilTempAt
+              })
+            }
+          }
+
           return (
             loading ?
             <Spinner /> :
-            <Plot
-            data={[
-              {
-                x: oilTempAt,
-                y: oilTempValue,
-                type: 'scatter',
-                mode: 'lines+points',
-                marker: {color: 'red'},
-              },
-              {
-                x: waterTempAt,
-                y: waterTempValue,
-                type: 'scatter',
-                mode: 'lines+points',
-                marker: {color: 'blue'},
-              }
-            ]}
-            layout={ {width: 1600, height: 800, title: 'A Fancy Plot'} }
-            />
+            <LineChart width={1600} height={800} data={fullArray} >
+            <Line dot={false} stroke="#ff0000" dataKey="oilTempValue" />
+            <Line dot={false} dataKey="waterTempValue" />
+            <CartesianGrid stroke="#ccc" />
+            <XAxis minTickGap={50} dataKey="oilTempAt" reversed />
+            <XAxis minTickGap={50} dataKey="waterTempAt" reversed />
+            {hasTemp &&
+              <YAxis label={{ value: 'Temperature', angle: -90, position: 'insideLeft' }} domain={["auto", "auto"]} />
+            }
+            {hasPressure &&
+              <YAxis label={{ value: 'PSI', angle: -90, position: 'insideLeft' }} domain={["auto", "auto"]} />
+            }
+            <Tooltip />
+          </LineChart>
           )
         }}
       </Subscription>
-      {oilTempArray && <div>The current oilTemp is {oilTempArray[0].value} at {oilTempArray[0].at}</div>}
       </React.Fragment>
   )
 }
 
 export default Graph;
 
+
+
+
+
+
 /*
 
-            <LineChart width={1600} height={800} data={metricArray} >
-              <Line dot={false} dataKey="value" />
-              <CartesianGrid stroke="#ccc" />
-              <XAxis minTickGap={50} dataKey="at" reversed />
-              {hasTemp &&
-                <YAxis label={{ value: 'Temperature', angle: -90, position: 'insideLeft' }} domain={["auto", "auto"]} />
-              }
-              {hasPressure &&
-                <YAxis label={{ value: 'PSI', angle: -90, position: 'insideLeft' }} domain={["auto", "auto"]} />
-              }
-              <Tooltip />
-            </LineChart>
+            <Plot
+            data={[{
+              x: oilTempAt,
+              y: oilTempValue,
+              type: 'scatter',
+              mode: 'lines+points',
+              marker: {color: 'red'}
+            },
+            {
+              x: waterTempAt,
+              y: waterTempValue,
+              type: 'scatter',
+              mode: 'lines+points',
+              marker: {color: 'blue'}
+            }]}
+            layout={ {width: 1600, height: 800, title: 'A Fancy Plot'} }
+            />
+
+
+
 */

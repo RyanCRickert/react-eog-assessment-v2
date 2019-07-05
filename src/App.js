@@ -62,6 +62,14 @@ const theme = createMuiTheme({
   }
 });
 
+let tempVal = true;
+
+const handleChangeVal = () => {
+  console.log("fired! value is ", tempVal);
+  tempVal = !tempVal
+  console.log("new val is ", tempVal)
+}
+
 const App = props => (
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
@@ -69,7 +77,8 @@ const App = props => (
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <Graph oilTemp={true} waterTemp={true} flareTemp={false} tubingPressure={false} casingPressure={false} injValveOpen={false}/>
+        <button onClick={handleChangeVal}>Change</button>
+        <Graph oilTemp={false} waterTemp={tempVal} flareTemp={false} tubingPressure={false} casingPressure={false} injValveOpen={false}/>
         <ToastContainer />
       </Wrapper>
     </Provider>
