@@ -219,7 +219,7 @@ const Graph = props => {
           if(!loading) {
             metricsArray.forEach(metric => {
               if(props[metric] && metric === data.newMeasurement.metric) {
-                updateMetric(data.newMeasurement, metric);
+                //updateMetric(data.newMeasurement, metric);
               }
             })
           }
@@ -229,9 +229,9 @@ const Graph = props => {
           if(waterTempArray && oilTempArray) {
             for(let i = 0; i < 1500; i++) {
               fullArray.push({
-                waterTempValue: waterTempArray[i].waterTempValue,
+                "Water temp": waterTempArray[i].waterTempValue,
                 waterTempAt: waterTempArray[i].waterTempAt,
-                oilTempValue: oilTempArray[i].oilTempValue,
+                "Oil temp": oilTempArray[i].oilTempValue,
                 oilTempAt: oilTempArray[i].oilTempAt
               })
             }
@@ -241,8 +241,8 @@ const Graph = props => {
             loading ?
             <Spinner /> :
             <LineChart width={1600} height={800} data={fullArray} >
-            <Line dot={false} stroke="#ff0000" dataKey="oilTempValue" />
-            <Line dot={false} dataKey="waterTempValue" />
+            <Line dot={false} stroke="#ff0000" dataKey="Oil temp" />
+            <Line dot={false} dataKey="Water temp" />
             <CartesianGrid stroke="#ccc" />
             <XAxis minTickGap={50} dataKey="oilTempAt" reversed />
             <XAxis minTickGap={50} dataKey="waterTempAt" reversed />

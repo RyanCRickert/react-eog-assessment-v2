@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import createStore from "./store";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -7,7 +7,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
-import Graph from "./components/Graph";
+//import Graph from "./components/Graph";
+import GraphPlot from "./components/GraphPlot";
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
@@ -62,28 +63,32 @@ const theme = createMuiTheme({
   }
 });
 
-let tempVal = true;
 
-const handleChangeVal = () => {
-  console.log("fired! value is ", tempVal);
-  tempVal = !tempVal
-  console.log("new val is ", tempVal)
-}
+const App = props => {
+  const [oilTemp, setOilTemp] = useState(true);
+  const [flareTemp, setFlareTemp] = useState(true);
 
-const App = props => (
+  const handleToggleOilTemp = () => {
+    setOilTemp(!oilTemp)
+  }
+  
+  return (
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
     <ApolloProvider client={client}>
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <button onClick={handleChangeVal}>Change</button>
-        <Graph oilTemp={false} waterTemp={tempVal} flareTemp={false} tubingPressure={false} casingPressure={false} injValveOpen={false}/>
+        <button onClick={handleToggleOilTemp}>Change</button>
+        {//<Graph oilTemp={false} waterTemp={tempVal} flareTemp={false} tubingPressure={false} casingPressure={false} injValveOpen={false}/>
+      }
+        <GraphPlot oilTemp={oilTemp} />
         <ToastContainer />
       </Wrapper>
     </Provider>
     </ApolloProvider>
   </MuiThemeProvider>
-);
+  )
+};
 
 export default App;

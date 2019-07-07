@@ -1999,10 +1999,15 @@ acorn@^6.0.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.2.tgz#6a459041c320ab17592c6317abbfdf4bbaa98ca4"
   integrity sha512-GXmKIvbrN3TV7aVqAzVFaMW8F8wzVX7voEBRO3bDA64+EX37YSayggRJP5Xig6HYHBkWKpFg9W5gg6orklubhg==
 
-acorn@^6.0.4, acorn@^6.0.5, acorn@^6.0.7, acorn@^6.1.1:
+acorn@^6.0.4, acorn@^6.0.5, acorn@^6.0.7:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
   integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
+
+acorn@^6.1.1:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.2.0.tgz#67f0da2fc339d6cfb5d6fb244fd449f33cd8bbe3"
+  integrity sha512-8oe72N3WPMjA+2zVG71Ia0nXZ8DpQH+QyyHO+p06jT8eg8FGG3FbcUIi8KziHlAfheJQZeoqbvq1mQSQHXKYLw==
 
 add-line-numbers@^1.0.1:
   version "1.0.1"
@@ -3006,17 +3011,17 @@ bser@^2.0.0:
     node-int64 "^0.4.0"
 
 buble@^0.19.3:
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/buble/-/buble-0.19.7.tgz#1dfd080ab688101aad5388d3304bc82601a244fd"
-  integrity sha512-YLgWxX/l+NnfotydBlxqCMPR4FREE4ubuHphALz0FxQ7u2hp3BzxTKQ4nKpapOaRJfEm1gukC68KnT2OymRK0g==
+  version "0.19.8"
+  resolved "https://registry.yarnpkg.com/buble/-/buble-0.19.8.tgz#d642f0081afab66dccd897d7b6360d94030b9d3d"
+  integrity sha512-IoGZzrUTY5fKXVkgGHw3QeXFMUNBFv+9l8a4QJKG1JhG3nCMHTdEX1DCOg8568E2Q9qvAQIiSokv6Jsgx8p2cA==
   dependencies:
     acorn "^6.1.1"
     acorn-dynamic-import "^4.0.0"
     acorn-jsx "^5.0.1"
     chalk "^2.4.2"
-    magic-string "^0.25.2"
+    magic-string "^0.25.3"
     minimist "^1.2.0"
-    os-homedir "^1.0.1"
+    os-homedir "^2.0.0"
     regexpu-core "^4.5.4"
 
 bubleify@^1.0.0, bubleify@^1.1.0, bubleify@^1.2.0:
@@ -3208,6 +3213,11 @@ canvas-fit@^1.5.0:
   integrity sha1-rhO+Zq3kL1vg5IfjRfzjCl5bXl8=
   dependencies:
     element-size "^1.1.1"
+
+canvasjs@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/canvasjs/-/canvasjs-1.8.1.tgz#698a4e002e336ce83ef2f9101a6bd276ba7657a3"
+  integrity sha1-aYpOAC4zbOg+8vkQGmvSdrp2V6M=
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -6350,9 +6360,9 @@ gl-surface3d@^1.4.6:
     typedarray-pool "^1.0.0"
 
 gl-text@^1.1.6:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/gl-text/-/gl-text-1.1.7.tgz#a3d188f369bd957c9b25c176848721cd6a2e8508"
-  integrity sha512-dEvuxqjgfWI3OeA4GwJ7ERFZEJbo6M/Bqn438L4T+xCuCbIFO0s12WUu3DVy+UyKHXLTVPWLcZKLpzVp8nNZoA==
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/gl-text/-/gl-text-1.1.8.tgz#67a19bec72915acc422300aad8f727a09f98b550"
+  integrity sha512-whnq9DEFYbW92C4ONwk2eT0YkzmVPHoADnEtuzMOmit87XhgAhBrNs3lK9EgGjU/MoWYvlF6RkI8Kl7Yuo1hUw==
   dependencies:
     bit-twiddle "^1.0.2"
     color-normalize "^1.5.0"
@@ -6369,7 +6379,7 @@ gl-text@^1.1.6:
     parse-unit "^1.0.1"
     pick-by-alias "^1.2.0"
     regl "^1.3.11"
-    to-px "^1.1.0"
+    to-px "^1.0.1"
     typedarray-pool "^1.1.0"
 
 gl-texture2d@^2.0.0, gl-texture2d@^2.0.2, gl-texture2d@^2.0.8:
@@ -8652,7 +8662,7 @@ magic-string@^0.22.4:
   dependencies:
     vlq "^0.2.2"
 
-magic-string@^0.25.2:
+magic-string@^0.25.3:
   version "0.25.3"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.3.tgz#34b8d2a2c7fec9d9bdf9929a3fd81d271ef35be9"
   integrity sha512-6QK0OpF/phMz0Q2AxILkX2mFhi7m+WMwTRg0LQKq/WBB0cDP4rYH3Wp4/d3OTXlrPLVJT/RFqj8tFeAR4nk8AA==
@@ -9761,10 +9771,15 @@ os-browserify@^0.3.0:
   resolved "https://registry.yarnpkg.com/os-browserify/-/os-browserify-0.3.0.tgz#854373c7f5c2315914fc9bfc6bd8238fdda1ec27"
   integrity sha1-hUNzx/XCMVkU/Jv8a9gjj92h7Cc=
 
-os-homedir@^1.0.0, os-homedir@^1.0.1:
+os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
   integrity sha1-/7xJiDNuDoM94MFox+8VISGqf7M=
+
+os-homedir@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-2.0.0.tgz#a0c76bb001a8392a503cbd46e7e650b3423a923c"
+  integrity sha512-saRNz0DSC5C/I++gFIaJTXoFJMRwiP5zHar5vV3xQ2TkgEw6hDCcU5F272JjUylpiVgBrZNQHnfjkLabTfb92Q==
 
 os-locale@^3.0.0:
   version "3.0.1"
@@ -10148,6 +10163,11 @@ planar-graph-to-polyline@^1.0.0:
     robust-sum "^1.0.0"
     two-product "^1.0.0"
     uniq "^1.0.0"
+
+plotly.js-dist@^1.48.3:
+  version "1.48.3"
+  resolved "https://registry.yarnpkg.com/plotly.js-dist/-/plotly.js-dist-1.48.3.tgz#b160b2d080ad87720121c9119f28036f35a301dc"
+  integrity sha512-Ocy2WWjzh4Ofk293AgTvP0ga053nTV7TvUbYEzmq1E9Eh7wc6HCPBxo55YcZThHw3hVycEnhktLQK94en1bYSw==
 
 plotly.js@^1.48.3:
   version "1.48.3"
@@ -11298,6 +11318,11 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
+react-canvas-js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-canvas-js/-/react-canvas-js-1.0.1.tgz#c3a788e9e96e95e6b0e76d48fffce5737c3575cb"
+  integrity sha512-rn+CEpdUmybItigZLPcSgecSf0kEWASa15jA3GbVsi9WJ19jngu/OW9+bUkepl5Eiioz0pkIiyny+3sJWcTcZg==
+
 react-dev-utils@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.1.tgz#5c03d85a0b2537d0c46af7165c24a7dfb274bef2"
@@ -11367,6 +11392,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-plotly.js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-plotly.js/-/react-plotly.js-2.3.0.tgz#c1e624e33e00e3c5bf7c482f3b80133097619070"
+  integrity sha512-+eNqIQtGe/WmgsZ+IDxOt8Zy/QXRTmbgqq+yID6dNsCG5zst946fZlLR+u0U7yt2z3IsatAyKAPXUZh5DHUR5Q==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-plotlyjs@^0.4.4:
   version "0.4.4"
@@ -12765,10 +12797,15 @@ source-map@~0.1.33:
   dependencies:
     amdefine ">=0.0.4"
 
-sourcemap-codec@^1.4.1, sourcemap-codec@^1.4.4:
+sourcemap-codec@^1.4.1:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.4.tgz#c63ea927c029dd6bd9a2b7fa03b3fec02ad56e9f"
   integrity sha512-CYAPYdBu34781kLHkaW3m6b/uUSyMOC2R61gcYMWooeuaGtjof86ZA/8T+qVPPt7np1085CR9hmMGrySwEc8Xg==
+
+sourcemap-codec@^1.4.4:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.6.tgz#e30a74f0402bad09807640d39e971090a08ce1e9"
+  integrity sha512-1ZooVLYFxC448piVLBbtOxFcXwnymH9oUF8nRd3CuYDVvkRBxRl6pB4Mtas5a4drtL+E8LDgFkQNcgIw6tc8Hg==
 
 space-separated-tokens@^1.0.0:
   version "1.1.4"
@@ -13242,9 +13279,9 @@ surface-nets@^1.0.0, surface-nets@^1.0.2:
     zero-crossings "^1.0.0"
 
 svg-arc-to-cubic-bezier@^3.0.0:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/svg-arc-to-cubic-bezier/-/svg-arc-to-cubic-bezier-3.1.3.tgz#7b5f76445310ef03238964c39ae7dbc761fda879"
-  integrity sha512-OyxEvzadllRxlvDiFBihKyl5He2jRvmRx/EyS5fzdz7OF+GF+6IDG9PxJLkyGViREmQMcRaNV92ZusXXoWMFaw==
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/svg-arc-to-cubic-bezier/-/svg-arc-to-cubic-bezier-3.1.4.tgz#f6dc4f008efd0972d4a4d1cbba9399488cce2f86"
+  integrity sha512-xZnu4KjRlO+QnlgdOb4uRLdN8nK3XlJntYzrHsZ3337Xup+Zsid9YsOSimKvINbEq/TD67gLA1GgPdtfJaq10A==
 
 svg-path-bounds@^1.0.1:
   version "1.0.1"
@@ -13561,7 +13598,7 @@ to-object-path@^0.3.0:
   dependencies:
     kind-of "^3.0.2"
 
-to-px@^1.0.1, to-px@^1.1.0:
+to-px@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/to-px/-/to-px-1.1.0.tgz#b6b269ed5db0cc9aefc15272a4c8bcb2ca1e99ca"
   integrity sha512-bfg3GLYrGoEzrGoE05TAL/Uw+H/qrf2ptr9V3W7U0lkjjyYnIfgxmVLUfhQ1hZpIQwin81uxhDjvUkDYsC0xWw==
