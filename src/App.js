@@ -7,7 +7,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
-//import Graph from "./components/Graph";
 import GraphPlot from "./components/GraphPlot";
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client';
@@ -65,11 +64,15 @@ const theme = createMuiTheme({
 
 
 const App = props => {
-  const [oilTemp, setOilTemp] = useState(true);
-  const [flareTemp, setFlareTemp] = useState(true);
+  const [oilTemp, setOilTemp] = useState(false);
+  const [flareTemp, setFlareTemp] = useState(false);
+  const [waterTemp, setWaterTemp] = useState(false);
+  const [tubingPressure, setTubingPressure] = useState(false);
+  const [casingPressure, setCasingPressure] = useState(false);
+  const [injValveOpen, setInjValueOpen] = useState(false);
 
-  const handleToggleOilTemp = () => {
-    setOilTemp(!oilTemp)
+  const handleToggleMetric = (metric, setter) => {
+    setter(!metric)
   }
   
   return (
@@ -79,10 +82,20 @@ const App = props => {
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <button onClick={handleToggleOilTemp}>Change</button>
-        {//<Graph oilTemp={false} waterTemp={tempVal} flareTemp={false} tubingPressure={false} casingPressure={false} injValveOpen={false}/>
-      }
-        <GraphPlot oilTemp={oilTemp} />
+        <button onClick={() => handleToggleMetric(oilTemp, setOilTemp)}>Toggle oil</button>
+        <button onClick={() => handleToggleMetric(waterTemp, setWaterTemp)}>Toggle water</button>
+        <button onClick={() => handleToggleMetric(flareTemp, setFlareTemp)}>Toggle flare</button>
+        <button onClick={() => handleToggleMetric(tubingPressure, setTubingPressure)}>Toggle tube</button>
+        <button onClick={() => handleToggleMetric(casingPressure, setCasingPressure)}>Toggle case</button>
+        <button onClick={() => handleToggleMetric(injValveOpen, setInjValueOpen)}>Toggle valve</button>
+        <GraphPlot
+          oilTemp={oilTemp}
+          flareTemp={flareTemp}
+          waterTemp={waterTemp}
+          tubingPressure={tubingPressure}
+          casingPressure={casingPressure}
+          injValveOpen={injValveOpen}
+        />
         <ToastContainer />
       </Wrapper>
     </Provider>
