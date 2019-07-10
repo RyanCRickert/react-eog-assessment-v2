@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Subscription } from "react-apollo";
 import { gql } from "apollo-boost";
-import * as moment from 'moment';
-import createPlotlyComponent from 'react-plotlyjs';
-import Plotly from 'plotly.js/dist/plotly-cartesian';
+import * as moment from "moment";
+import createPlotlyComponent from "react-plotlyjs";
+import Plotly from "plotly.js/dist/plotly-cartesian";
 
 import Spinner from "./Spinner/Spinner";
+import ActiveMetric from "./ActiveMetric/ActiveMetric";
 
 const PlotlyComponent = createPlotlyComponent(Plotly);
 const subscribe = gql`
@@ -54,7 +55,7 @@ const getMetric = (metric, helperArray) => {
 
       for(let i = call.length -1; i >= call.length -1500; i--) {
         target.unshift({
-          at: moment(call[i].at).format('MMM DD H:mm:ss A'),
+          at: moment(call[i].at).format("MMM DD H:mm:ss A"),
           value: call[i].value,
           unit: call[i].unit
         });
@@ -75,8 +76,12 @@ const Graph = props => {
   const [ casingPressureArray , setCasingPressureArray ] = useState();
   const [ injValveOpenArray , setInjValveOpenArray ] = useState();
   const [ metricsArray, setMetricsArray] = useState([]);
-  const hasTemp = props.flareTemp || props.oilTemp || props.waterTemp;
-  const hasPressure = props.tubingPressure || props.casingPressure;
+  const [ newOil, setNewOil ] = useState();
+  const [ newWater, setNewWater ] = useState();
+  const [ newFlare, setNewFlare ] = useState();
+  const [ newCasing, setNewCasing ] = useState();
+  const [ newTubing, setNewTubing ] = useState();
+  const [ newValve, setNewValve ] = useState();
 
   const fetchAll = () => {
     getMetric("oilTemp", setOilTempArray);
@@ -109,7 +114,7 @@ const Graph = props => {
     switch(data.metric) {
       case "oilTemp":
         let newOilValue = {
-          at: moment(data.at).format('MMM DD H:mm:ss A'),
+          at: moment(data.at).format("MMM DD H:mm:ss A"),
           value: data.value,
           unit: data.unit
         }
@@ -118,12 +123,13 @@ const Graph = props => {
           const newOilArray = oilTempArray;
           newOilArray.push(newOilValue);
           newOilArray.unshift();
+          setNewOil(data.value);
           return setOilTempArray(newOilArray);
         }
         break;
       case "waterTemp":
           let newWaterValue = {
-            at: moment(data.at).format('MMM DD H:mm:ss A'),
+            at: moment(data.at).format("MMM DD H:mm:ss A"),
             value: data.value,
             unit: data.unit
           }
@@ -132,12 +138,13 @@ const Graph = props => {
             const newWaterArray = waterTempArray;
             newWaterArray.push(newWaterValue);
             newWaterArray.unshift();
+            setNewWater(data.value);
             return setWaterTempArray(newWaterArray);
           }
           break;
       case "flareTemp":
           let newFlareValue = {
-            at: moment(data.at).format('MMM DD H:mm:ss A'),
+            at: moment(data.at).format("MMM DD H:mm:ss A"),
             value: data.value,
             unit: data.unit
           }
@@ -146,12 +153,13 @@ const Graph = props => {
             const newFlareArray = flareTempArray;
             newFlareArray.push(newFlareValue);
             newFlareArray.unshift();
+            setNewFlare(data.value);
             return setFlareTempArray(newFlareArray);
           }
           break;
       case "tubingPressure":
           let newTubingValue = {
-            at: moment(data.at).format('MMM DD H:mm:ss A'),
+            at: moment(data.at).format("MMM DD H:mm:ss A"),
             value: data.value,
             unit: data.unit
           }
@@ -160,12 +168,13 @@ const Graph = props => {
             const newTubingArray = tubingPressureArray;
             newTubingArray.push(newTubingValue);
             newTubingArray.unshift();
+            setNewTubing(data.value);
             return setTubingPressureArray(newTubingArray);
           }
           break;
       case "casingPressure":
           let newCasingValue = {
-            at: moment(data.at).format('MMM DD H:mm:ss A'),
+            at: moment(data.at).format("MMM DD H:mm:ss A"),
             value: data.value,
             unit: data.unit
           }
@@ -174,12 +183,13 @@ const Graph = props => {
             const newCasingArray = casingPressureArray;
             newCasingArray.push(newCasingValue);
             newCasingArray.unshift();
+            setNewCasing(data.value);
             return setCasingPressureArray(newCasingArray);
           }
           break;
       case "injValveOpen":
           let newInjValue = {
-            at: moment(data.at).format('MMM DD H:mm:ss A'),
+            at: moment(data.at).format("MMM DD H:mm:ss A"),
             value: data.value,
             unit: data.unit
           }
@@ -188,6 +198,7 @@ const Graph = props => {
             const newInjArray = injValveOpenArray;
             newInjArray.push(newInjValue);
             newInjArray.unshift();
+            setNewValve(data.value);
             return setInjValveOpenArray(newInjArray);
           }
           break;
@@ -196,7 +207,7 @@ const Graph = props => {
     }
   }
 
-  const buildDataObject = (array) => {
+  const buildDataObject = array => {
     const atArray = [];
     const valueArray = [];
 
@@ -209,6 +220,27 @@ const Graph = props => {
       at: atArray,
       value: valueArray
     };
+  }
+
+  const showActiveMetrics = () => {
+    const newestValues = [
+      {metric: "Oil Temp", value: newOil, prop: "oilTemp", unit: "°F"},
+      {metric: "Flare Temp", value: newFlare, prop: "flareTemp", unit: "°F"},
+      {metric: "Water Temp", value: newWater, prop: "waterTemp", unit: "°F"},
+      {metric: "Casing Pressure", value: newCasing, prop: "casingPressure", unit: "PSI"},
+      {metric: "Tubing Pressure", value: newTubing, prop: "tubingPressure", unit: "PSI"},
+      {metric: "Injector Valve Open", value: newValve, prop: "injValveOpen", unit: "%"}
+    ];
+
+    return (
+      newestValues.map(item => {
+        if(props[item["prop"]]){
+         return <ActiveMetric key={item["metric"]} metric={item["metric"]} value={item["value"]} unit={item["unit"]}/>
+        } else {
+          return null
+        }
+      })
+    )
   }
     
   return (
@@ -253,62 +285,84 @@ const Graph = props => {
 
           let plotData = [
             {
-              type: 'scatter',  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
+              type: "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
               x: oilTempObj.at,     // more about "x": #scatter-x
               y: oilTempObj.value,     // #scatter-y
-              name: "Oil Temp",
+              name: "Oil Temp (°F)",
+              hoverlabel: {
+                namelength: 30
+              },
               marker: {         // marker is an object, valid marker keys: #scatter-marker
-                color: 'rgb(0, 0, 0)' // more about "marker.color": #scatter-marker-color
+                color: "rgb(0, 0, 0)" // more about "marker.color": #scatter-marker-color
               }
             },
             {
-              type: 'scatter',
+              type: "scatter",
               x: waterTempObj.at,
               y: waterTempObj.value,
-              name: "Water Temp",
+              name: "Water Temp (°F)",
+              hoverlabel: {
+                namelength: 30
+              },
               marker: {
-                color: 'rgb(135, 206, 250)'
+                color: "rgb(135, 206, 250)"
               }
             },{
-              type: 'scatter',
+              type: "scatter",
               x: flareTempObj.at,
               y: flareTempObj.value,
-              name: "Flare Temp",
+              name: "Flare Temp (°F)",
+              hoverlabel: {
+                namelength: 30
+              },
               marker: {
-                color: 'rgb(250, 100, 115)'
+                color: "rgb(250, 100, 115)"
               }
             },{
-              type: 'scatter',
+              type: "scatter",
               x: casingPressureObj.at,
               y: casingPressureObj.value,
-              name: "Casing Pressure",
+              name: "Casing Pressure (PSI)",
+              hoverlabel: {
+                namelength: 30
+              },
               marker: {
-                color: 'rgb(50, 104, 243)'
+                color: "rgb(50, 104, 243)"
               }
             },
             {
-              type: 'scatter',
+              type: "scatter",
               x: tubingPressureObj.at,
               y: tubingPressureObj.value,
-              name: "Tubing Pressure",
+              name: "Tubing Pressure (PSI)",
+              hoverlabel: {
+                namelength: 30
+              },
               marker: {
-                color: 'rgb(204, 206, 43)'
+                color: "rgb(204, 206, 43)"
               }
             },{
-              type: 'scatter',
+              type: "scatter",
               x: injValveOpenObj.at,
               y: injValveOpenObj.value,
-              name: "Injector Valve Open",
+              name: "Injector Valve Open (%)",
+              hoverlabel: {
+                namelength: 30
+              },
               marker: {
-                color: 'rgb(250, 206, 43)'
+                color: "rgb(250, 206, 43)"
               }
             }
           ];
-          let layout = {                     // all "layout" attributes: #layout
-            title: 'Metric Tracker',  // more about "layout.title": #layout-title
-            xaxis: {                  // all "layout.xaxis" attributes: #layout-xaxis
-              title: 'time'         // more about "layout.xaxis.title": #layout-xaxis-title
-            }
+          let layout = {
+            title: "Metric Tracker",
+            xaxis: {
+              nticks: 10
+            },
+            yaxis: {
+              title: "°F"
+            },
+            height: 700,
           };
           let config = {
             showLink: false,
@@ -316,14 +370,19 @@ const Graph = props => {
           };
 
           return (
-            loading ?
+            <div>
+            {loading ?
             <Spinner /> :
             metricsArray.length !== 0 ?
             <PlotlyComponent className="whatever" data={plotData} layout={layout} config={config}/> :
-            <div>No data selected</div>
+            <div>No data selected</div>}
+            </div>
           )
         }}
       </Subscription>
+      <div style={{width: "100%", display: "flex"}}>
+        {showActiveMetrics()}
+      </div>
       </React.Fragment>
   )
 }
