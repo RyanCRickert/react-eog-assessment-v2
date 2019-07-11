@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/react-eog-assessment-v2/static/css/main.7d5f01c4.chunk.css",
+    "main.js": "/react-eog-assessment-v2/static/js/main.5a35613a.chunk.js",
+    "main.js.map": "/react-eog-assessment-v2/static/js/main.5a35613a.chunk.js.map",
+    "runtime~main.js": "/react-eog-assessment-v2/static/js/runtime~main.503ae778.js",
+    "runtime~main.js.map": "/react-eog-assessment-v2/static/js/runtime~main.503ae778.js.map",
+    "static/css/2.24f13fed.chunk.css": "/react-eog-assessment-v2/static/css/2.24f13fed.chunk.css",
+    "static/js/2.52641d93.chunk.js": "/react-eog-assessment-v2/static/js/2.52641d93.chunk.js",
+    "static/js/2.52641d93.chunk.js.map": "/react-eog-assessment-v2/static/js/2.52641d93.chunk.js.map",
+    "index.html": "/react-eog-assessment-v2/index.html",
+    "precache-manifest.181391a8f7bb9334cb557c59eff81c4c.js": "/react-eog-assessment-v2/precache-manifest.181391a8f7bb9334cb557c59eff81c4c.js",
+    "service-worker.js": "/react-eog-assessment-v2/service-worker.js",
+    "static/css/2.24f13fed.chunk.css.map": "/react-eog-assessment-v2/static/css/2.24f13fed.chunk.css.map",
+    "static/css/main.7d5f01c4.chunk.css.map": "/react-eog-assessment-v2/static/css/main.7d5f01c4.chunk.css.map"
+  }
+}
