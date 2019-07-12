@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
 import GraphPlot from "./components/GraphPlot";
+
+//import GraphPlot from "./components/Graph";
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
